@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puter.js: AI Playground For Test.</title>
+    <link rel="icon" href="https://docs.puter.com/assets/favicon/android-icon-192x192.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white">
+    <div class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 z-50 transition-transform duration-300 transform" id="sidebar">
+        <div class="flex flex-col h-full p-4 px-8">
+            <div class="flex items-center justify-between mb-4">
+                <button class="p-2 hover:bg-gray-100 rounded-xl" id="closeSidebar">
+                    <span class="material-icons text-gray-500">menu</span>
+                </button>
+            </div>
+            <div class="space-y-2">
+                <a class="flex items-center space-x-3 p-3 px-5 rounded-xl bg-gray-100 transition-colors">
+                    <span class="text-sm text-gray-600">Playground</span>
+                </a>
+                <a href="https://docs.puter.com" target="_blank" class="flex items-center space-x-3 p-3 px-5 rounded-xl hover:bg-gray-100 transition-colors">
+                    <span class="text-sm text-gray-600">Documentation</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <header class="fixed top-0 left-0 right-0 bg-white z-50">
+        <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex items-center">
+                <button id="toggleSidebar" class="p-2 hover:bg-gray-100 rounded-xl">
+                    <span class="material-icons text-gray-600">menu</span>
+                </button>
+                
+                <div class="fixed inset-x-0 mx-auto w-max">
+                    <button id="modelSelector" class="inline-flex items-center hover:bg-gray-100 px-3 py-1 rounded-xl">
+                        <div class="flex flex-col items-start">
+                            <div class="text-md font-medium text-gray-600">
+                                Puter.js: AI Playground.
+                            </div>
+                            <span id="selectedModelType" class="text-xs text-gray-500">
+                                GPT-4o Mini
+                            </span>
+                        </div>
+                        <span class="material-icons text-gray-400 ml-2">expand_more</span>
+                    </button>
+                    
+                    <div id="modelDropdown" class="hidden absolute left-1/2 transform -translate-x-1/2 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg w-80">
+                        <div class="py-1">
+                            <div class="text-sm px-4 py-2 text-gray-500">GPT - OpenAI</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4o Mini</span>
+                                    <p class="text-xs text-gray-500">gpt-4o-mini</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4o</span>
+                                    <p class="text-xs text-gray-500">gpt-4o</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o1</span>
+                                    <p class="text-xs text-gray-500">o1</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o1 Mini</span>
+                                    <p class="text-xs text-gray-500">o1-mini</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o1 Pro</span>
+                                    <p class="text-xs text-gray-500">o1-pro</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o3</span>
+                                    <p class="text-xs text-gray-500">o3</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o3 Mini</span>
+                                    <p class="text-xs text-gray-500">o3-mini</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>OpenAI o4 Mini</span>
+                                    <p class="text-xs text-gray-500">o4-mini</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4.1</span>
+                                    <p class="text-xs text-gray-500">gpt-4.1</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4.1 Mini</span>
+                                    <p class="text-xs text-gray-500">gpt-4.1-mini</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4.1 Nano</span>
+                                    <p class="text-xs text-gray-500">gpt-4.1-nano</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100" data-multimodal="no">
+                                <div>
+                                    <span>GPT-4.5 Preview</span>
+                                    <p class="text-xs text-gray-500">gpt-4.5-preview</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">Claude - Anthropic</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Claude Sonnet 4</span>
+                                    <p class="text-xs text-gray-500">claude-sonnet-4</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Claude Opus 4</span>
+                                    <p class="text-xs text-gray-500">claude-opus-4</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Claude 3.7 Sonnet</span>
+                                    <p class="text-xs text-gray-500">claude-3-7-sonnet</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Claude 3.5 Sonnet</span>
+                                    <p class="text-xs text-gray-500">claude-3-5-sonnet</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">DeepSeek - High-Flyer</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>DeepSeek Chat</span>
+                                    <p class="text-xs text-gray-500">deepseek-chat</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>DeepSeek Reasoner</span>
+                                    <p class="text-xs text-gray-500">deepseek-reasoner</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">Gemini - Google</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Gemini 2.0 Flash</span>
+                                    <p class="text-xs text-gray-500">gemini-2.0-flash</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Gemini 1.5 Flash</span>
+                                    <p class="text-xs text-gray-500">gemini-1.5-flash</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">Meta LLaMA - Together.ai</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Meta-Llama 3.1 8B Instruct Turbo</span>
+                                    <p class="text-xs text-gray-500">meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Meta-Llama 3.1 70B Instruct Turbo</span>
+                                    <p class="text-xs text-gray-500">meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Meta-Llama 3.1 405B Instruct Turbo</span>
+                                    <p class="text-xs text-gray-500">meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">Mistral AI</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Mistral Large Latest</span>
+                                    <p class="text-xs text-gray-500">mistral-large-latest</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Pixtral Large Latest</span>
+                                    <p class="text-xs text-gray-500">pixtral-large-latest</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Codestral Latest</span>
+                                    <p class="text-xs text-gray-500">codestral-latest</p>
+                                </div>
+                            </button>
+                            <div class="text-sm px-4 py-2 text-gray-500">Grok - xAI</div>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Gemma 2 27B IT</span>
+                                    <p class="text-xs text-gray-500">google/gemma-2-27b-it</p>
+                                </div>
+                            </button>
+                            <button class="model-option w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <div>
+                                    <span>Grok Beta</span>
+                                    <p class="text-xs text-gray-500">grok-beta</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative">  
+                <button id="clearChatButton" class="hidden p-2 hover:bg-gray-100 rounded-xl">
+                    <span class="material-icons text-gray-600">delete</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="pt-16">
+        <div id="chatContainer" class="max-w-3xl mx-auto px-6 py-4">
+            <div id="initialState" class="fixed inset-0 flex flex-col justify-center items-center text-center px-10 pb-20">
+                <h1 class="text-3xl font-semibold mb-4">_huh??</h1>
+            </div>
+        </div>
+    </main>
+
+    <div id="chatArea" class="fixed bottom-0 left-0 right-0 bg-gray-50 rounded-t-xl border shadow-lg">
+        <div class="max-w-3xl mx-auto p-6">
+            <form id="chatForm" class="relative">
+                <div class="flex items-center gap-2 bg-white rounded-xl pl-5 p-2">
+                    <textarea
+                        type="text"
+                        id="messageInput"
+                        placeholder="Enter Message"
+                        class="flex-1 border-none focus:outline-none text-gray-700 placeholder-gray-500 rounded"
+                        rows="1"
+                        style="min-height: 20px; max-height: 150px; font-size: 15px;"
+                    ></textarea>
+                
+                    <button type="submit" id="sendButton" class="p-2 text-gray-500 hover:bg-gray-100 rounded-xl disabled:opacity-50">
+                        <span class="material-icons">arrow_upward</span>
+                    </button>
+                </div>
+                
+                <div class="text-gray-500 text-center mt-2" style="font-size: 11px;">
+                    AI can make mistakes. Check important info.
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://js.puter.com/v2/"></script>
+    <script src="script.js"></script>
+</body>
+</html>
